@@ -25,6 +25,11 @@ public class ContactsController {
         return "contacts";
     }
 
+    @GetMapping("/about")
+    public String about(Model model) {
+        return "about";
+    }
+
     @GetMapping("/contacts/{id}")
     public String showContact(@PathVariable int id, Model model) {
         var contact = service.findContact(id).orElseThrow(ContactNotFound::new);

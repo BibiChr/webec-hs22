@@ -1,0 +1,3 @@
+{% extends "layout" %}
+{% block title %}Contacts{% endblock %}
+{% block main %}Description here.{% endblock %}

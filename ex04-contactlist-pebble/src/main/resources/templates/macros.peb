@@ -1,0 +1,30 @@
+{# @pebvariable name="list" type="java.util.List<String>" #}
+
+    {% macro contactTableEntry(header, entry) %}
+    <tr>
+        <th>{{ header }}</th>
+        <td>{{ entry }}</td>
+    </tr>
+    {% endmacro %}
+
+    {% macro contactTableEntryOk(header, entry) %}
+        {% if entry != null %}
+        {{contactTableEntry(header, entry)}}
+        {% endif %}
+    {% endmacro %}
+
+    {% macro contactTableEntryOkList(header, list) %}
+        {% if not list.empty %}
+        {{contactTableEntryList(header, list)}}
+        {% endif %}
+    {% endmacro %}
+
+{% macro contactTableEntryList(header, list) %}
+<tr>
+    <th>{{ header }}</th>
+    <td>{% for entry in list %}
+        {{ entry }} <br/>
+        {% endfor %}
+    </td>
+</tr>
+{% endmacro %}

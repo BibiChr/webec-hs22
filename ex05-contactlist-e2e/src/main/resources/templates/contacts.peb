@@ -9,7 +9,7 @@
 {% block main%}
 <main id="contacts">
     <nav>
-        <ul>
+        <ul id="contact">
             {% for entry in contactList %}
                 <li>
                     <a href="{{ href("/contacts/" + entry.id) }}"

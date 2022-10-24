@@ -1,5 +1,6 @@
 package ch.fhnw.webec.contactlist.service;
 
+import ch.fhnw.webec.contactlist.data.ContactRepository;
 import ch.fhnw.webec.contactlist.model.Contact;
 import ch.fhnw.webec.contactlist.model.ContactListEntry;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,14 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class ContactService {
 
-    private final List<Contact> contacts = new ArrayList<>();
+    private ContactRepository contactRepository;
+
+    public ContactService(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 
     public List<ContactListEntry> getContactList(String search) {
-        return contacts.stream()
+        return contactRepository.findAll().stream()
                 .filter(c -> matches(c, search))
                 .sorted(comparing(Contact::getId))
                 .map(c -> new ContactListEntry(c.getId(), c.getFirstName() + " " + c.getLastName()))
@@ -40,19 +45,17 @@ public class ContactService {
     }
 
     public Optional<Contact> findContact(int id) {
-        return contacts.stream()
-                .filter(c -> c.getId() == id)
-                .findFirst();
+        return contactRepository.findById(id);
     }
 
     public int phoneNumberCount() {
-        return contacts.stream()
+        return contactRepository.findAll().stream()
                 .mapToInt(c -> c.getPhone().size())
                 .sum();
     }
 
     public int emailCount() {
-        return contacts.stream()
+        return contactRepository.findAll().stream()
                 .mapToInt(c -> c.getEmail().size())
                 .sum();
     }
@@ -68,7 +71,7 @@ public class ContactService {
     }
 
     public Contact add(Contact contact) {
-        contacts.add(contact);
+        contactRepository.save(contact);
         return contact; // important for later, when using Repository
     }
 }

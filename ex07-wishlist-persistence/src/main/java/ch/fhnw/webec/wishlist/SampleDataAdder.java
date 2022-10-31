@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
@@ -37,11 +38,13 @@ public class SampleDataAdder implements CommandLineRunner {
         this.categoryService = categoryService;
     }
 
+    @Transactional
     @Override
     public void run(String... args) throws IOException {
         addSampleData();
     }
 
+    //@Transactional geht hier nicht, weil addSampleData() in der gleichen Klasse geladen wird
     public void addSampleData() throws IOException {
         if (wishlistService.findAll().isEmpty() && categoryService.findAll().isEmpty()) {
             logger.info("Adding sample data");

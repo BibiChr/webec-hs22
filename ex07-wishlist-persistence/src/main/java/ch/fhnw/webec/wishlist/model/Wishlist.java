@@ -1,19 +1,31 @@
 package ch.fhnw.webec.wishlist.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.Comparator.comparing;
+import static javax.persistence.CascadeType.ALL;
 
+@Entity
 public class Wishlist {
 
-    private Integer id;
+    @Id
+    @GeneratedValue
+    private int id;
     private String name;
     private LocalDate createdDate;
+    @OneToMany(cascade = ALL)
     private List<Wish> entries = new ArrayList<>();
 
-    protected Wishlist() {} // for JSON deserialization
+    protected Wishlist() {
+    } // for JSON deserialization
 
     public Wishlist(String name) {
         this.name = name;
@@ -46,7 +58,7 @@ public class Wishlist {
 
     public List<Wish> getEntriesByPriority() {
         return entries.stream()
-                .sorted(comparing(Wish::getPriority).reversed())
-                .toList();
+            .sorted(comparing(Wish::getPriority).reversed())
+            .toList();
     }
 }

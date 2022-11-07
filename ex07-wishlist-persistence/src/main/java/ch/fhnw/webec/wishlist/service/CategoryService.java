@@ -32,10 +32,10 @@ public class CategoryService {
     }
 
     public void delete(Category category) {
-        wishlistRepository.findAll().stream()
-                .flatMap(list -> list.getEntries().stream())
-                    .forEach(category -> wishlistRepository.);
-        repo.delete(category);
+//        wishlistRepository.findAll().stream()
+//                .flatMap(list -> list.getEntries().stream())
+//                    .forEach(category -> wishlistRepository.add(category));
+//        repo.delete(category);
     }
 
 }
